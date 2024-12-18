@@ -52,6 +52,52 @@ input[type="text"] {
     margin-left: 10px;
 }
 
+.meals {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    margin-top: 20px;
+}
+
+.meal {
+    cursor: pointer;
+    /* set the parent to relative so we can re-position it's child, like the 'meal-info' for example */
+    position: relative; 
+    height: 180px;
+    width: 180px;
+    text-align: center;
+}
+
+.meal img {
+    height: 100%;
+    width: 100%;
+    border: 4px #fff solid;
+    border-radius: 2px;
+}
+
+.meal-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+}
+
+.meal:hover .meal-info {
+    opacity: 1; 
+}
+
+
+
+
+
+
 @media(max-width: 800px){
 
 }
