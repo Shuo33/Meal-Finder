@@ -6,7 +6,6 @@ const resultHeading = document.getElementById('result-heading');
 const single_mealEl = document.getElementById('single-meal');
 
 
-
 // Search meal and fetch from API
 function searchMeal(e) {
     // Since it's a submit we need to prevent the submit default behavior
@@ -54,15 +53,19 @@ function searchMeal(e) {
 
 
 
-// Fetch meal detail by it's ID
-async function getMealById(mealID) {
-    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`);
+// Fetch random meal from API and display it to the DOM 
+async function randomMeal() {
+    // Clear up everything: meals and heading
+    mealsEl.innerHTML = '';
+    resultHeading.innerHTML = '';
+
+    const res = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
     const data = await res.json();
     const meal = data.meals[0];
-    // console.log(meal);
 
     addMealToDOM(meal);
 }
+
 
 
 // Add meal to DOM : 
@@ -91,26 +94,38 @@ function addMealToDOM(meal) {
       </div>
 
       <div class="main">
-       <p>Instruction: ${meal.strInstructions}</p>
+       <p><strong>Instruction</strong>: ${meal.strInstructions}</p>
        <h2>Ingredients</h2>
          <ul>
-           ${ingredients.map(ing => `<li>${ing}</li>`).join('')}
+           ${ingredients.map(item => `<li>${item}</li>`).join('')}
          </ul>
       </div>
     </div>
     `; 
-
-
-
-    
-
-    
 }
+
+
+
+
+// Fetch meal detail by it's ID
+async function getMealById(mealID) {
+    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`);
+    const data = await res.json();
+    const meal = data.meals[0];
+    // console.log(meal);
+
+    addMealToDOM(meal);
+}
+
+
+
 
 
 // Event Listeners
 // we use 'submit' since the form has a button type submit
 submit.addEventListener('submit', searchMeal);
+
+random.addEventListener('click', randomMeal);
 
 mealsEl.addEventListener('click', e => {
     // Filter the div with 'meal-info' in order to find it's id later: 'e.composedPath()' method returns an array of objects with all the elements the current event will propogate through; find() helps to loop through all the items and find the items that pass the test parameter
